@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SERVIQ Desk — Requester & Receiver</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+<nav class="nav">
+<button class="brand" id="brand"><span class="mark">S</span><b>SERVIQ Desk</b><span class="badge" style="margin-left:6px">AI Bootcamp</span></button>
+<div id="navlinks" style="display:flex;gap:6px;flex-wrap:wrap"></div>
+<div id="userarea"></div>
+</nav>
+
+<section class="view active" id="v-landing">
+<div class="hero">
+<div class="card hero-main">
+<span class="badge" style="background:var(--accent-soft);color:var(--accent)">Week 1 • Ticket Classification Module</span>
+<h1 class="h1">Resolve tickets faster with SERVIQ</h1>
+<p class="sub">Smart triage for HR, IT, Finance & Operations. Requester creates with category dropdowns, title auto-fills from sub-category, Receiver triages High → Low.</p>
+<div class="stats">
+<div class="stat"><b>1.2k+</b><div class="hint">Tickets triaged</div></div>
+<div class="stat"><b>&lt;2h</b><div class="hint">Avg response</div></div>
+<div class="stat"><b>4</b><div class="hint">Teams</div></div>
+<div class="stat"><b>AI</b><div class="hint">Classification</div></div>
+</div>
+<div style="margin-top:14px;display:flex;gap:6px;flex-wrap:wrap"><span class="badge hr">HR</span><span class="badge it">IT</span><span class="badge fin">Finance</span><span class="badge ops">Operations</span></div>
+<div style="margin-top:18px"><b>How it works</b><ol class="hint" style="margin:6px 0 0 18px"><li>Choose category → sub-category dropdown</li><li>Title auto-fills from sub-category choice</li><li>Receiver sees full requester ticket HTML + priority queue</li></ol></div>
+</div>
+<div class="role">
+<div class="rcard" data-go="requester"><h3>🧑‍💼 Requester Portal — Raise Ticket</h3><p class="hint">Enter name, surname, department, category + sub-category (payslip, staff, etc). Title auto-fills.</p><div style="margin-top:12px"><button class="nbtn lime" style="width:100%">Start as Requester →</button></div></div>
+<div class="rcard" data-go="receiver"><h3>🛠️ Receiver / Admin — Triage Desk</h3><p class="hint">Queue grouped Critical → High → Medium → Low. Each card shows full requester HTML.</p><div style="margin-top:12px"><button class="nbtn primary" style="width:100%">Open Triage Desk →</button></div></div>
+<div class="card"><b>Demo logins</b><p class="hint">requester@serviq.com → Requester (sees ONLY own)<br>admin@serviq.com → Receiver (sees ALL)<br>Any password works</p><button class="nbtn ghost" id="resetDemo" style="margin-top:8px">Reset Demo Data</button></div>
+</div>
+</div>
+</section>
+
+<section class="view" id="v-login">
+<div class="login-wrap">
+<div class="card" style="display:flex;flex-direction:column;gap:14px;padding:22px">
+<div style="display:flex;align-items:center;gap:10px"><span class="mark">S</span><b>SERVIQ Desk</b></div>
+<h2 style="margin:0">Sign in with work email</h2>
+<div><div class="hint">Work Email</div><input id="email" class="input" type="email" placeholder="name@company.com" value="requester@serviq.com"></div>
+<div><div class="hint">Password</div><input id="password" class="input" type="password" placeholder="••••••••" value="demo123"></div>
+<div style="display:flex;gap:6px;flex-wrap:wrap">
+<button class="nbtn ghost" data-fill="requester@serviq.com">Use requester@serviq.com</button>
+<button class="nbtn ghost" data-fill="admin@serviq.com">Use admin@serviq.com</button>
+</div>
+<div style="margin-top:12px"><button id="loginBtn" class="btn">Sign in to SERVIQ</button></div>
+<div class="hint">Login button at bottom. Role auto-detected: admin = sees ALL.</div>
+</div>
+</div>
+</section>
+
+<section class="view" id="v-create">
+<div class="form-wrap">
+<div class="card">
+<h2 style="margin:0">Create Ticket — Requester</h2>
+<p class="hint">Category controls sub-category. Sub-category auto-fills title. No priority (Admin sets).</p>
+<div style="display:flex;flex-direction:column;gap:12px;margin-top:14px">
+<div class="grid2">
+<div><div class="hint">Requester Name *</div><input id="r-name" class="input" placeholder="Nthabiseng"></div>
+<div><div class="hint">Surname *</div><input id="r-surname" class="input" placeholder="Molefe"></div>
+</div>
+<div><div class="hint">Requester Department</div><select id="r-dept" class="select"><option>HR</option><option>IT</option><option>Finance</option><option>Operations</option><option>Marketing</option><option>Sales</option></select></div>
+<div><div class="hint">Category (HR, IT, Finance, Operations) *</div><select id="r-cat" class="select"><option value="">Select category</option><option>HR</option><option>IT</option><option>Finance</option><option>Operations</option></select></div>
+<div><div class="hint">Sub-category dropdown — changes with category *</div><select id="r-sub" class="select"><option value="">Select category first</option></select></div>
+<div><div class="hint" id="title-label">Ticket Title — auto-filled from sub-category, editable *</div><input id="r-title" class="input" placeholder="e.g. HR: Payslip Issue"></div>
+<div><div class="hint">Description *</div><textarea id="r-desc" class="textarea" rows="5" placeholder="Describe the issue..."></textarea></div>
+<button id="submitTicket" class="btn lime">Send to Triage Desk</button>
+</div>
+</div>
+<div class="card preview">
+<h3 style="margin:0">Live Requester Ticket Preview</h3><p class="hint">This exact HTML is shown on Receiver page</p>
+<div id="livePreview" class="requester-html" style="margin-top:12px">Fill form to see preview</div>
+</div>
+</div>
+</section>
+
+<section class="view" id="v-myqueue">
+<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px"><h2 style="margin:0">My Tickets — Private to You</h2><button class="nbtn lime" data-go="create">+ New Ticket</button></div>
+<div class="card" style="display:flex;gap:8px;flex-wrap:wrap"><input id="my-search" class="input" placeholder="Search my tickets" style="max-width:260px"><select id="my-status" class="select" style="max-width:180px"><option value="all">All status</option><option value="open">Waiting</option><option value="progress">In progress</option><option value="resolved">Resolved</option></select></div>
+<div id="my-list" class="groups"></div>
+</section>
+
+<section class="view" id="v-receiver">
+<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px"><h2 style="margin:0">Triage Desk — Admin / Receiver</h2><span class="badge">Admin sees ALL tickets</span></div>
+<div class="card" style="display:flex;gap:8px;flex-wrap:wrap"><input id="adm-search" class="input" placeholder="Search all tickets" style="max-width:260px"><select id="adm-status" class="select" style="max-width:180px"><option value="active">Active (Waiting + In Progress)</option><option value="all">All</option><option value="open">Waiting</option><option value="progress">In progress</option><option value="resolved">Resolved</option></select><select id="adm-pri" class="select" style="max-width:160px"><option value="all">All priorities</option><option value="critical">Critical</option><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option></select></div>
+<div id="adm-groups" class="groups"></div>
+</section>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
